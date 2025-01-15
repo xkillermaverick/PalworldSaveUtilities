@@ -1,4 +1,21 @@
 import re, os , sys
+def get_number_in_range(min_value, max_value):
+  while True:
+    try:
+      number = int(input(f"Enter a number between {min_value} and {max_value}: "))
+      if min_value <= number <= max_value:
+        return number
+      else:
+        print("Number is out of range. Try again.")
+    except ValueError:
+      print("Invalid input. Please enter an integer.")
+def get_directory_from_user():
+    while True:
+        directory_path = input("Please enter a directory path: ")
+        if os.path.isdir(directory_path):
+            return directory_path
+        else:
+            print("Invalid directory path. Please try again.")
 def extract_player_info(line):
     match = re.search(r'Player: (.+?) \| UID: ([\w-]+) \| .*?Owned: (\d+)', line)
     if match:
@@ -21,7 +38,16 @@ def find_player_uids_with_max_pals(log_file, max_pals):
             player_info.append((line.strip(), player_uid, pals_found))
     return player_info
 def delete_player_saves(player_info):
-    players_folder = "Players"
+    print("1. LocalWorldSave\\Players")
+    print("2. DedicatedServerSave\\Players")
+    print("3. I want to input the directory path manually")
+    intUserChoice = get_number_in_range(1, 3)
+    if intUserChoice == 1:
+        players_folder = "LocalWorldSave\\Players"
+    if intUserChoice == 2:
+        players_folder = "DedicatedServerSave\\Players"
+    if intUserChoice == 3:
+        players_folder = get_directory_from_user()
     if not os.path.exists(players_folder):
         print(f"Players folder '{players_folder}' not found.")
         return
@@ -43,11 +69,11 @@ def delete_player_saves(player_info):
         print(f"Total number of pals deleted: {total_pals_to_delete}")
         print(f"Deleted {deleted_count} PlayerUID.sav files.")
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python delete_pals_save.py <log_file> <max_pals>")
+    if len(sys.argv) < 1:
+        print("Usage: python delete_pals_save.py <log_file>")
         sys.exit(1)
     log_file = sys.argv[1]
-    max_pals = int(sys.argv[2]) if len(sys.argv) > 2 else 10
+    max_pals = int(input("Enter maximum number of pals per player to delete: "))
     player_info = find_player_uids_with_max_pals(log_file, max_pals)
     if player_info:
         delete_player_saves(player_info)

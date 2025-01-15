@@ -1,5 +1,22 @@
 import re, os, sys, argparse
 from datetime import datetime, timedelta
+def get_number_in_range(min_value, max_value):
+  while True:
+    try:
+      number = int(input(f"Enter a number between {min_value} and {max_value}: "))
+      if min_value <= number <= max_value:
+        return number
+      else:
+        print("Number is out of range. Try again.")
+    except ValueError:
+      print("Invalid input. Please enter an integer.")
+def get_directory_from_user():
+    while True:
+        directory_path = input("Please enter a directory path: ")
+        if os.path.isdir(directory_path):
+            return directory_path
+        else:
+            print("Invalid directory path. Please try again.")
 def extract_last_online(data):
     match = re.search(r'Last Online: ([\d\- :]+)', data)
     if match:
@@ -32,7 +49,16 @@ def filter_players_by_days_and_level(players, days, level):
                 filtered_players.append((player, pals_count))
     return filtered_players
 def delete_player_saves(player_data):
-    players_folder = "Players"
+    print("1. LocalWorldSave\\Players")
+    print("2. DedicatedServerSave\\Players")
+    print("3. I want to input the directory path manually")
+    intUserChoice = get_number_in_range(1, 3)
+    if intUserChoice == 1:
+        players_folder = "LocalWorldSave\\Players"
+    if intUserChoice == 2:
+        players_folder = "DedicatedServerSave\\Players"
+    if intUserChoice == 3:
+        players_folder = get_directory_from_user()
     if not os.path.exists(players_folder):
         print(f"Players folder '{players_folder}' not found.")
         return 0, 0
@@ -55,13 +81,15 @@ def delete_player_saves(player_data):
     else:
         print(f"Total number of pals deleted: {total_pals_to_delete}")
     return deleted_count, total_pals_to_delete
-def main(file_path, days, level):
+def main(file_path):
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             player_data = file.readlines()
     except FileNotFoundError:
         print(f"File '{file_path}' not found.")
         sys.exit(1)
+    days = int(input("Enter the number of days a player has been inactive: "))
+    level = int(input("Enter the maximum player level a player should be to be considered for deletion: "))
     player_data = [line.strip() for line in player_data if line.strip()]
     filtered_players = filter_players_by_days_and_level(player_data, days, level)
     sorted_players = sorted(filtered_players, key=lambda x: extract_last_online(x[0]) or datetime.min)
@@ -76,7 +104,5 @@ def main(file_path, days, level):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Sort, filter, and delete players by days since last online and level.")
     parser.add_argument("file", help="Path to the file containing player data")
-    parser.add_argument("days", type=int, help="Minimum number of days since last online to include")
-    parser.add_argument("level", type=int, help="Maximum level to include")
     args = parser.parse_args()
-    main(args.file, args.days, args.level)
+    main(args.file)

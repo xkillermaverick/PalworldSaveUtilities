@@ -1,4 +1,5 @@
 from convert import *
+import xgp_save_extract
 import zipfile
 import glob
 import shutil
@@ -23,8 +24,20 @@ def move_and_rename_level_files(file_path, new_name):
     new_file_path = os.path.join(parent_directory, new_name)
     print("Moving file from '{file_path}' to '{new_file_path}'")
     shutil.move(file_path, new_file_path)
+def check_xbox_zip(directory, partial_name):
+    for filename in os.listdir(directory):
+        if filename.endswith(".zip") and partial_name in filename:
+            return True
+    return False
 def main():
-    xbox_save_zip(".", "palworld", "GamePassSave")
+    if check_xbox_zip(".", "palworld"):
+        print("Found palworld xbox save zip file! Extracting Now...")
+        xbox_save_zip(".", "palworld", "GamePassSave")
+    else:
+        print("Palworld zip file not found. Loading XGP Extractor...")
+        print("This is only possable due to Mark Mäkinen's and his team's hard work")
+        print("This has been altered to convert palworld only")
+        xgp_save_extract.main()
     delete_converted_save_backups("GamePassSave", "Slot")
     level_file_paths = glob.glob("GamePassSave/**/01.sav", recursive=True)
     for specific_level_file in level_file_paths:
