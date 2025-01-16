@@ -6,6 +6,26 @@ setlocal EnableExtensions EnableDelayedExpansion
 title Palworld Save Utilities
 echo Setting up your environment!
 
+:: Create the LocalWorldSave folder
+if not exist "LocalWorldSave" (
+	mkdir "LocalWorldSave"
+	mkdir "LocalWorldSave/Players"
+	echo LocalWorldSave folder and its subdirectories have been created.
+)
+
+:: Create the DedicatedServerSave folder
+if not exist "DedicatedServerSave" (
+	mkdir "DedicatedServerSave"
+	mkdir "DedicatedServerSave/Players"
+	echo DedicatedServerSave folder and its subdirectories have been created.
+)
+
+:: Create the GamePassSave folder
+if not exist "GamePassSave" (
+	mkdir "GamePassSave"
+	echo GamePassSave folder has been created.
+)
+
 :: Create a virtual environment
 python -m venv venv
 
@@ -22,21 +42,22 @@ set strName[3]=Convert Player files to the json file format
 set strName[4]=Convert Player files back to sav file format
 set strName[5]=Convert Game Pass Save to Steam Save
 set strName[6]=Convert Steam Save to Game Pass Save
-set strName[7]=Transfer Character to another Save file
-set strName[8]=Transfer Character to a different Steam ID
-set strName[9]=Delete Inactive Players Saves
-set strName[10]=Delete Duplicate Player Saves only leaving Steam Player Saves
-set strName[11]=Delete Duplicate Player Saves only leaving Xbox Player Saves
-set strName[12]=Delete a set number of pals from all players
-set strName[13]=Destroy Inactive Player Bases on Servers
-set strName[14]=Generate a Image of your Save Map
-set strName[15]=Repair Corrupted Save file
-set strName[16]=Fix Coop Save Player data to load on Dedicated Servers
-set strName[17]=Clean up generated files
-set strName[18]=Palworld Save Utilities Package Manager
-set strName[19]=Update Palworld Save Utilities
-set strName[20]=About Palworld Save Utilities
-set strName[21]=Exit Palworld Save Utilities
+set strName[7]=Edit your Palworld Save file
+set strName[8]=Transfer Character to another Save file
+set strName[9]=Transfer Character to a different Steam ID
+set strName[10]=Delete Inactive Players Saves
+set strName[11]=Delete Duplicate Player Saves only leaving Steam Player Saves
+set strName[12]=Delete Duplicate Player Saves only leaving Xbox Player Saves
+set strName[13]=Delete a set number of pals from all players
+set strName[14]=Destroy Inactive Player Bases on Servers
+set strName[15]=Generate a Image of your Save Map
+set strName[16]=Repair Corrupted Save file
+set strName[17]=Fix Coop Save Player data to load on Dedicated Servers
+set strName[18]=Clean up generated files
+set strName[19]=Palworld Save Utilities Package Manager
+set strName[20]=Update Palworld Save Utilities
+set strName[21]=About Palworld Save Utilities
+set strName[22]=Exit Palworld Save Utilities
 
 :: Menu Options
 set "strRequest[1]=%strName[1]%"
@@ -60,6 +81,7 @@ set "strRequest[18]=%strName[18]%"
 set "strRequest[19]=%strName[19]%"
 set "strRequest[20]=%strName[20]%"
 set "strRequest[21]=%strName[21]%"
+set "strRequest[21]=%strName[22]%"
 
 :: Display the Menu
 set "Message="
@@ -67,7 +89,7 @@ set "Message="
 cls
 echo.%Message%
 echo.
-echo.  Palworld Save Utilities Version 1.1 (Working as of v0.4.12 Patch)
+echo.  Palworld Save Utilities Version 1.1.1 (Working as of v0.4.13 Patch)
 echo.
 set "intMenuCounter=0"
 :objMenuLoop
@@ -84,12 +106,12 @@ if defined strRequest[%intMenuCounter%] (
 		echo   Save Managment Tools
 		echo ==================================================================================
 	)
-		if %intMenuCounter% == 14 (
+		if %intMenuCounter% == 15 (
 		echo ==================================================================================
 		echo   Save Repair Tools
 		echo ==================================================================================
 	)
-		if %intMenuCounter% == 16 (
+		if %intMenuCounter% == 17 (
 		echo ==================================================================================
 		echo   Program Managment
 		echo ==================================================================================
@@ -143,6 +165,7 @@ if "%strRequest%" EQU "%strName[1]%" (
 	cls
     :: Run the convert_level_location_finder.py script
 	python convert_level_location_finder.py json
+	pause
 	goto objMenu
 )
 if "%strRequest%" EQU "%strName[2]%" (
@@ -150,6 +173,7 @@ if "%strRequest%" EQU "%strName[2]%" (
 	cls
     :: Run the convert_level_location_finder.py script
 	python convert_level_location_finder.py sav
+	pause
 	goto objMenu
 )
 if "%strRequest%" EQU "%strName[3]%" (
@@ -157,6 +181,7 @@ if "%strRequest%" EQU "%strName[3]%" (
 	cls
     :: Run the convert_players_location_finder.py script to convert sav to json
 	python convert_players_location_finder.py json
+	pause
 	goto objMenu
 )
 if "%strRequest%" EQU "%strName[4]%" (
@@ -164,6 +189,7 @@ if "%strRequest%" EQU "%strName[4]%" (
 	cls
     :: Run the convert_players_location_finder.py script to convert json to sav
 	python convert_players_location_finder.py sav
+	pause
 	goto objMenu
 )
 if "%strRequest%" EQU "%strName[5]%" (
@@ -171,6 +197,7 @@ if "%strRequest%" EQU "%strName[5]%" (
 	cls
     :: Run the game_pass_save_fix.py script
 	python game_pass_save_fix.py
+	pause
 	goto objMenu
 )
 if "%strRequest%" EQU "%strName[6]%" (
@@ -178,58 +205,74 @@ if "%strRequest%" EQU "%strName[6]%" (
 	cls
 	:: Run the GPSaveConverter.py script
 	python GPSaveConverter.py
+	pause
 	goto objMenu
 )
 if "%strRequest%" EQU "%strName[7]%" (
+	title Loading oMaN-Rod's Save Editor...
+	cls
+	:: Run the PSP.py script
+	python PSP.py
+	pause
+	goto objMenu
+)
+if "%strRequest%" EQU "%strName[8]%" (
 	title Loading Pylar's Save Tool...
 	cls
 	:: Run the char-export.py script
 	python char-export.py
-	goto objMenu
-)
-if "%strRequest%" EQU "%strName[8]%" (
-    title Loading Pylar's Save Tool...
-	cls
-    :: Run the convertids.py script
-	python convertids.py
+	pause
 	goto objMenu
 )
 if "%strRequest%" EQU "%strName[9]%" (
     title Loading Pylar's Save Tool...
 	cls
-	:: Execute sort_players.py using the Python from the virtual environment
-	python sort_players.py players.log
+    :: Run the convertids.py script
+	python convertids.py
+	pause
 	goto objMenu
 )
 if "%strRequest%" EQU "%strName[10]%" (
     title Loading Pylar's Save Tool...
 	cls
-    :: Run the AutoDeleteNoSteamSaves.py script
-	python AutoDeleteNoSteamSaves.py
+	:: Execute sort_players.py using the Python from the virtual environment
+	python sort_players.py players.log
+	pause
 	goto objMenu
 )
 if "%strRequest%" EQU "%strName[11]%" (
     title Loading Pylar's Save Tool...
 	cls
-    :: Run the AutoDeleteNoXboxSaves.py script
-	python AutoDeleteNoXboxSaves.py
+    :: Run the AutoDeleteNoSteamSaves.py script
+	python AutoDeleteNoSteamSaves.py
+	pause
 	goto objMenu
 )
 if "%strRequest%" EQU "%strName[12]%" (
+    title Loading Pylar's Save Tool...
+	cls
+    :: Run the AutoDeleteNoXboxSaves.py script
+	python AutoDeleteNoXboxSaves.py
+	pause
+	goto objMenu
+)
+if "%strRequest%" EQU "%strName[13]%" (
     title  Loading Pylar's Save Tool - Modified by xKillerMaverick...
 	cls
 	:: Execute delete_pals_save.py using the Python from the virtual environment
 	python delete_pals_save.py players.log
+	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[13]%" (
+if "%strRequest%" EQU "%strName[14]%" (
     title Loading Pylar's Save Tool...
 	cls
     :: Run the AutoCheckBases.py script
 	python AutoCheckBases.py
+	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[14]%" (
+if "%strRequest%" EQU "%strName[15]%" (
     title Loading Pylar's Map Maker Tool...
 	cls
     :: Run the internal_libs.base.py
@@ -244,7 +287,7 @@ if "%strRequest%" EQU "%strName[14]%" (
 	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[15]%" (
+if "%strRequest%" EQU "%strName[16]%" (
     title Loading Pylar's Save Tool - Modified by xKillerMaverick...
 	cls
     :: Delete old files from previous runs
@@ -255,16 +298,18 @@ if "%strRequest%" EQU "%strName[15]%" (
 	if exist "import_lock.txt" del "import_lock.txt"
 	:: Run the fix_save.py with Level.sav
 	python fix_save_location_finder.py
+	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[16]%" (
+if "%strRequest%" EQU "%strName[17]%" (
     title Loading Pylar's Save Tool...
 	cls
     :: Run the fix_host_save.py with LocalWorldSave
 	python fix_host_save.py LocalWorldSave
+	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[17]%" (
+if "%strRequest%" EQU "%strName[18]%" (
     title Cleaning Palworld Save Utilities Directory...
 	cls
 	:: Clean up all .log files
@@ -337,29 +382,32 @@ if "%strRequest%" EQU "%strName[17]%" (
 	:: Delete import_lock.txt
 	if exist "import_lock.txt" del "import_lock.txt"
 	echo Everything's all cleaned.
+	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[18]%" (
+if "%strRequest%" EQU "%strName[19]%" (
 	title Palworld Save Utilities Package Manager
 	cls
+	echo To Delete all Downloaded files Press any button to continue else close the Command Prompt
+	pause
+	:: Delete GPSaveConverter.exe
+	if exist "GPSaveConverter.exe" del "GPSaveConverter.exe"
+	:: Delete the psp_windows folder and its contents
+	if exist "psp_windows" rmdir /s /q "psp_windows" >nul 2>&1
+	echo All Downloaded files have been removed.
+	echo To list all Python Package Press any button to continue else close the Command Prompt
+	pause
     pip list
 	echo To Uninstall Press any button to continue else close the Command Prompt
 	pause
-	:: Save current installed packages to requirements.txt
-	pip freeze > requirements.txt
 	:: Uninstall all packages listed in requirements.txt
 	pip uninstall -r requirements.txt -y
-	:: Delete GPSaveConverter.exe after uninstalling
-	if exist "GPSaveConverter.exe" (
-		del "GPSaveConverter.exe"
-		echo "GPSaveConverter.exe has been deleted."
-	)
 	echo Uninstallation complete.
 	pip list
 	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[19]%" (
+if "%strRequest%" EQU "%strName[20]%" (
     title Updating Palworld Save Utilities...
 	cls
 	:: Ensures pip is installed after checking python is installed already.
@@ -375,17 +423,18 @@ if "%strRequest%" EQU "%strName[19]%" (
     pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[20]%" (
+if "%strRequest%" EQU "%strName[21]%" (
     title About Palworld Save Utilities
 	cls
 	echo The UI was made by xKillerMaverick with plety of research in programing languages i dont fully know but work on this in hopes it help anyone that needs these tools
-	echo This Toolkit is only possable due to Pylar's and his team's hard work
-	echo Xbox Game Pass Extraction is only possable due to Mark Mäkinen's and his team's hard work
+	echo Converting and Repairing Palworld Save file is only possable due to Pylar's and his team's hard work
+	echo Xbox Game Pass Save Extraction is only possable due to Z1ni's and his team's hard work
 	echo Steam to Game Pass Convertion is only possable due to Fr33dan's and his team's hard work
+	echo Palworld Save Editing is only possable due to oMaN-Rod's and his team's hard work
 	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[21]%" (
+if "%strRequest%" EQU "%strName[22]%" (
     title Closing Palworld Save Utilities...
     exit
 )

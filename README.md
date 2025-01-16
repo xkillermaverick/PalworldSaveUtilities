@@ -1,4 +1,4 @@
-# PalWorldSaveTools: Working as of v0.4.12 Patch
+# PalWorldSaveTools: Working as of v0.4.13 Patch
 
 - **Author:** MagicBear and cheahjs  
 - **License:** MIT License  
@@ -40,8 +40,7 @@
 - Logs and sorts players by the number of pals owned.  
 - Deletes players with fewer than a specified number of pals.  
 - Includes double-click functionality for file save versions.  
-- Provides a **base map view** via `bases.cmd`.
-- Provides automated killnearestbase commands to be used with palguard for inactive bases.
+- Provides a **base map view** via `bases.cmd`.  
 - Transfers saves between dedicated servers and single/coop worlds.  
 - Includes Steam ID conversion with `convertids`.  
 
