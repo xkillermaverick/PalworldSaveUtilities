@@ -39,13 +39,13 @@ def repair_save(level_file):
     output_path = level_file
     return None
 def main():
-    print("1. LocalWorldSave\\Level.sav")
-    print("2. DedicatedServerSave\\Level.sav")
+    print("1. LocalWorldSave/Level.sav")
+    print("2. DedicatedServerSave/Level.sav")
     intUserChoice = get_number_in_range(1, 2)
     if intUserChoice == 1:
-        level_file = "LocalWorldSave\\Level.sav"
+        level_file = "LocalWorldSave/Level.sav"
     if intUserChoice == 2:
-        level_file = "DedicatedServerSave\\Level.sav"
+        level_file = "DedicatedServerSave/Level.sav"
     repair_save(level_file)
 if __name__ == "__main__":
     main()

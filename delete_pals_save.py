@@ -38,14 +38,14 @@ def find_player_uids_with_max_pals(log_file, max_pals):
             player_info.append((line.strip(), player_uid, pals_found))
     return player_info
 def delete_player_saves(player_info):
-    print("1. LocalWorldSave\\Players")
-    print("2. DedicatedServerSave\\Players")
+    print("1. LocalWorldSave/Players")
+    print("2. DedicatedServerSave/Players")
     print("3. I want to input the directory path manually")
     intUserChoice = get_number_in_range(1, 3)
     if intUserChoice == 1:
-        players_folder = "LocalWorldSave\\Players"
+        players_folder = "LocalWorldSave/Players"
     if intUserChoice == 2:
-        players_folder = "DedicatedServerSave\\Players"
+        players_folder = "DedicatedServerSave/Players"
     if intUserChoice == 3:
         players_folder = get_directory_from_user()
     if not os.path.exists(players_folder):

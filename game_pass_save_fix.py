@@ -38,6 +38,7 @@ def main():
         print("This is only possable due to Mark Mäkinen's and his team's hard work")
         print("This has been altered to convert palworld only")
         xgp_save_extract.main()
+        xbox_save_zip(".", "palworld", "GamePassSave")
     delete_converted_save_backups("GamePassSave", "Slot")
     level_file_paths = glob.glob("GamePassSave/**/01.sav", recursive=True)
     for specific_level_file in level_file_paths:
