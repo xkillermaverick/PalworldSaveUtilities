@@ -22,7 +22,7 @@ def move_and_rename_level_files(file_path, new_name):
     directory = os.path.dirname(file_path)
     parent_directory = os.path.dirname(directory)
     new_file_path = os.path.join(parent_directory, new_name)
-    print("Moving file from '{file_path}' to '{new_file_path}'")
+    print(f"Moving file from {file_path} to {new_file_path}")
     shutil.move(file_path, new_file_path)
 def check_xbox_zip(directory, partial_name):
     for filename in os.listdir(directory):
