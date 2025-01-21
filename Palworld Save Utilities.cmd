@@ -86,6 +86,7 @@ set "strRequest[21]=%strName[22]%"
 :: Display the Menu
 set "Message="
 :objMenu
+title Palworld Save Utilities
 cls
 echo.%Message%
 echo.
