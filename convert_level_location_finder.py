@@ -1,15 +1,15 @@
 from convert import *
-import fnmatch, os
+import fnmatch
 def get_number_in_range(min_value, max_value):
-  while True:
-    try:
-      number = int(input(f"Enter a number between {min_value} and {max_value}: "))
-      if min_value <= number <= max_value:
-        return number
-      else:
-        print("Number is out of range. Try again.")
-    except ValueError:
-      print("Invalid input. Please enter an integer.")
+    while True:
+        try:
+            number = int(input(f"Enter a number between {min_value} and {max_value}: "))
+            if min_value <= number <= max_value:
+                return number
+            else:
+                print("Number is out of range. Try again.")
+        except ValueError:
+            print("Invalid input. Please enter an integer.")
 def get_directory_from_user():
     while True:
         directory_path = input("Please enter a directory path: ")
