@@ -90,7 +90,8 @@ title Palworld Save Utilities
 cls
 echo.%Message%
 echo.
-echo.  Palworld Save Utilities Version 1.1.2 (Working as of v0.4.13 Patch)
+echo.  Palworld Save Utilities Version 1.1.3 (Working as of v0.4.13 Patch) 
+echo.       WARNING: ALWAYS BACKUP YOUR SAVES BEFORE USING THIS TOOL!
 echo.
 set "intMenuCounter=0"
 :objMenuLoop
