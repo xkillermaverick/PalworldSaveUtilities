@@ -1,18 +1,23 @@
-import re, os, sys, argparse
+import re, os, sys, argparse, glob
 from datetime import datetime, timedelta
+def check_folder(directory, partial_text):
+    for filename in glob.glob(f"{directory}/*"):
+        if partial_text in filename:
+            return True
+    return False
 def get_number_in_range(min_value, max_value):
-  while True:
-    try:
-      number = int(input(f"Enter a number between {min_value} and {max_value}: "))
-      if min_value <= number <= max_value:
-        return number
-      else:
-        print("Number is out of range. Try again.")
-    except ValueError:
-      print("Invalid input. Please enter an integer.")
+    while True:
+        try:
+            number = int(input(f"Enter a number between {min_value} and {max_value}: "))
+            if min_value <= number <= max_value:
+                return number
+            else:
+                print("Number is out of range. Try again.")
+        except ValueError:
+            print("Invalid input. Please enter an integer.")
 def get_directory_from_user():
     while True:
-        directory_path = input("Please enter a directory path: ")
+        directory_path = input("Please enter a directory path of your players folder: ")
         if os.path.isdir(directory_path):
             return directory_path
         else:
@@ -61,26 +66,30 @@ def delete_player_saves(player_data):
         players_folder = get_directory_from_user()
     if not os.path.exists(players_folder):
         print(f"Players folder '{players_folder}' not found.")
-        return 0, 0
-    total_pals_to_delete = sum(pals_count for _, pals_count in player_data)
-    deleted_count = 0
-    for player, _ in player_data:
-        match = re.search(r'UID: ([\w-]+)', player)
-        if match:
-            uid = match.group(1).replace('-', '')
-            sav_filename = f"{uid}.sav"
-            sav_file_paths = [os.path.join(players_folder, f) for f in os.listdir(players_folder) if f.lower() == sav_filename.lower()]
-            if sav_file_paths:
-                sav_file_path = sav_file_paths[0]
-                os.remove(sav_file_path)
-                deleted_count += 1
-                print(f"Deleted: {sav_file_path}")
-                print(f"Deleted Player Info: {player}")
-    if deleted_count == 0:
-        print(f"No PlayerUID.sav files found for deletion, skipping...")
+        exit(1)
+    if check_folder(players_folder, "00"):
+        total_pals_to_delete = sum(pals_count for _, pals_count in player_data)
+        deleted_count = 0
+        for player, _ in player_data:
+            match = re.search(r'UID: ([\w-]+)', player)
+            if match:
+                uid = match.group(1).replace('-', '')
+                sav_filename = f"{uid}.sav"
+                sav_file_paths = [os.path.join(players_folder, f) for f in os.listdir(players_folder) if f.lower() == sav_filename.lower()]
+                if sav_file_paths:
+                    sav_file_path = sav_file_paths[0]
+                    os.remove(sav_file_path)
+                    deleted_count += 1
+                    print(f"Deleted: {sav_file_path}")
+                    print(f"Deleted Player Info: {player}")
+        if deleted_count == 0:
+            print(f"No PlayerUID.sav files found for deletion, skipping...")
+        else:
+            print(f"Total number of pals deleted: {total_pals_to_delete}")
+        return deleted_count, total_pals_to_delete
     else:
-        print(f"Total number of pals deleted: {total_pals_to_delete}")
-    return deleted_count, total_pals_to_delete
+        print(f"Players folder is empty or does not contain player sav files.")
+        exit(1)
 def main(file_path):
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
