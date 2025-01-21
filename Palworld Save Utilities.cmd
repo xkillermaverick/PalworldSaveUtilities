@@ -164,7 +164,7 @@ if "%strRequest%" EQU "%strName[1]%" (
     title Loading Pylar's Convert Save Tool - Modified by xKillerMaverick...
 	cls
     :: Run the convert_level_location_finder.py script
-	python convert_level_location_finder.py json
+	python convert_level_location_finder.py sav
 	pause
 	goto objMenu
 )
@@ -172,7 +172,7 @@ if "%strRequest%" EQU "%strName[2]%" (
     title Loading Pylar's Convert Save Tool - Modified by xKillerMaverick...
 	cls
     :: Run the convert_level_location_finder.py script
-	python convert_level_location_finder.py sav
+	python convert_level_location_finder.py json
 	pause
 	goto objMenu
 )
@@ -180,7 +180,7 @@ if "%strRequest%" EQU "%strName[3]%" (
     title Loading Pylar's Convert Save Tool - Modified by xKillerMaverick...
 	cls
     :: Run the convert_players_location_finder.py script to convert sav to json
-	python convert_players_location_finder.py json
+	python convert_players_location_finder.py sav
 	pause
 	goto objMenu
 )
@@ -188,7 +188,7 @@ if "%strRequest%" EQU "%strName[4]%" (
     title Loading Pylar's Convert Save Tool - Modified by xKillerMaverick...
 	cls
     :: Run the convert_players_location_finder.py script to convert json to sav
-	python convert_players_location_finder.py sav
+	python convert_players_location_finder.py json
 	pause
 	goto objMenu
 )
