@@ -46,7 +46,7 @@ set strName[7]=Modify your Palworld Save file
 set strName[8]=Scan/Repair Save file
 set strName[9]=Generate a Image of your Palworld World Save
 set strName[10]=Fix Host Save (Convert host save to regular save and vice versa)
-set strName[11]=Transfer Character(Server to Server)
+set strName[11]=Transfer Character (Server to Server)
 set strName[12]=Convert Steam ID to two different Save IDs
 set strName[13]=Convert coordinates from in-game to the system in .sav files and vice versa
 set strName[14]=Delete Inactive Players Saves
@@ -97,7 +97,7 @@ for /f "tokens=2 delims==" %%a in ('findstr "GameVersion" %version_file%') do se
 echo.%Message%
 echo.
 echo.  Palworld Save Utilities v!tools_version! (Working as of v!game_version! Patch) 
-echo.       WARNING: ALWAYS BACKUP YOUR SAVES BEFORE USING THIS TOOL!
+echo.    WARNING: ALWAYS BACKUP YOUR SAVES BEFORE USING THIS TOOL!
 echo.
 title Palworld Save Utilities v!tools_version!
 set "intMenuCounter=0"
