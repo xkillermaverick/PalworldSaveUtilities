@@ -88,7 +88,6 @@ set "strRequest[23]=%strName[23]%"
 :: Display the Menu
 set "Message="
 :objMenu
-title Palworld Save Utilities v!tools_version!
 cls
 set "version_file=version.txt"
 set "tools_version="
@@ -100,6 +99,7 @@ echo.
 echo.  Palworld Save Utilities v!tools_version! (Working as of v!game_version! Patch) 
 echo.       WARNING: ALWAYS BACKUP YOUR SAVES BEFORE USING THIS TOOL!
 echo.
+title Palworld Save Utilities v!tools_version!
 set "intMenuCounter=0"
 :objMenuLoop
 if %intMenuCounter% == 0 (
