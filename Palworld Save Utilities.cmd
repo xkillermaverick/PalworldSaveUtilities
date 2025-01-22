@@ -4,7 +4,7 @@ setlocal EnableExtensions EnableDelayedExpansion
 
 :: Customize Window
 title Palworld Save Utilities
-echo Setting up your environment!
+echo Setting up your environment...
 
 :: Create the LocalWorldSave folder
 if not exist "LocalWorldSave" (
