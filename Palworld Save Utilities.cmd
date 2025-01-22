@@ -88,11 +88,16 @@ set "strRequest[23]=%strName[23]%"
 :: Display the Menu
 set "Message="
 :objMenu
-title Palworld Save Utilities
+title Palworld Save Utilities v!tools_version!
 cls
+set "version_file=version.txt"
+set "tools_version="
+set "game_version="
+for /f "tokens=2 delims==" %%a in ('findstr "ToolsVersion" %version_file%') do set "tools_version=%%a"
+for /f "tokens=2 delims==" %%a in ('findstr "GameVersion" %version_file%') do set "game_version=%%a"
 echo.%Message%
 echo.
-echo.  Palworld Save Utilities Version 1.1.3 (Working as of v0.4.13 Patch) 
+echo.  Palworld Save Utilities v!tools_version! (Working as of v!game_version! Patch) 
 echo.       WARNING: ALWAYS BACKUP YOUR SAVES BEFORE USING THIS TOOL!
 echo.
 set "intMenuCounter=0"
